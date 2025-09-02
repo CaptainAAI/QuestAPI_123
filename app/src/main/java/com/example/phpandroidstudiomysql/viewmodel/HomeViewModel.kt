@@ -2,7 +2,9 @@ package com.example.phpandroidstudiomysql.viewmodel
 
 import android.net.http.UrlRequest.Status
 import android.view.View
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -18,24 +20,25 @@ sealed interface StatusUiSiswa {
     object Error : StatusUiSiswa
     object Loading : StatusUiSiswa
 }
-
-class HomeViewModel(private val repositoryDataSiswa: RepositoryDataSiswa): ViewModel()
-{
-    var ListSiswa: StatusUiSiswa by mutableStateOf(StatusUiSiswa.Loading)
+class HomeViewModel(private val repositoryDataSiswa: RepositoryDataSiswa): ViewModel() {
+    var listSiswa: StatusUiSiswa by mutableStateOf(StatusUiSiswa.Loading)
         private set
+
     init{
         loadSiswa()
     }
+
     fun loadSiswa(){
-        viewModelScope.launch{
+        viewModelScope.launch {
             listSiswa = StatusUiSiswa.Loading
-            listSiswa = try{
+            listSiswa = try {
                 StatusUiSiswa.Success(repositoryDataSiswa.getDataSiswa())
             }catch (e:IOException){
                 StatusUiSiswa.Error
             }
-            catch (e: HttpException){
+            catch (e:HttpException){
                 StatusUiSiswa.Error
+            }
         }
     }
 }
