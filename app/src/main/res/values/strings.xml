@@ -1,60 +1,25 @@
 <resources>
-    <!-- // App name -->
-    <string name="app_name">RoomSiswa</string>
-    <!-- // Button label to add a new student -->
+    <string name="app_name">MySqlApp</string>
     <string name="entry_siswa">Tambah Siswa</string>
-    <!-- // Message shown when there are no students -->
     <string name="deskripsi_no_item">Tidak ada data Siswa. Tap + untuk menambah data</string>
-    <!-- // Label for student name input -->
     <string name="nama">Nama Siswa</string>
-    <!-- // Label for student address input -->
     <string name="alamat">Alamat Siswa</string>
-    <!-- // Label for student phone input -->
     <string name="telpon">Telpon Siswa</string>
-    <string name="nim">Nim Siswa</string>
-    <string name="kelas">Kelas Siswa</string>
-    <string name="Angkatan">Angkatan</string>
-    <string name="JenisKelamin">Jenis Kelamin</string>
-    <string name="Laki_Laki">Laki Laki</string>
-    <string name="Perempuan">Perempuan</string>
-    <string name="A">A</string>
-    <string name="B">B</string>
-    <string name="C">C</string>
-    <string name="D">D</string>
-    <string name="E">E</string>
-    <!-- // Alternative label for student name -->
     <string name="nama1">Nama Siswa</string>
-    <!-- // Alternative label for student address -->
     <string name="alamat1">Alamat Siswa</string>
-    <!-- // Alternative label for student phone with colon -->
-    <string name="telpon1">Telpon Siswa</string>
-    <string name="nim1">Nim Siswa</string>
-    <string name="kelas1">Kelas Siswa</string>
-    <string name="Angkatan1">Angkatan</string>
-    <string name="JenisKelamin1">Jenis Kelamin</string>
-    <string name="Laki_Laki1">Laki Laki</string>
-    <string name="Perempuan1">Perempuan</string>
-    <!-- // Message for required fields -->
+    <string name="telpon1">Telpon Siswa :</string>
     <string name="required_field"> required fields</string>
-    <!-- // Submit button label -->
     <string name="btn_submit">Submit</string>
-    <!-- // Title for student detail screen -->
     <string name="detail_siswa">Detail Siswa</string>
-    <!-- // Title for edit student screen -->
     <string name="edit_siswa">Edit Siswa</string>
-    <!-- // Back button label -->
     <string name="back">Back</string>
-    <!-- // Yes button label -->
     <string name="yes">Ya</string>
-    <!-- // No button label -->
     <string name="no">Tidak</string>
-    <!-- // Delete button label -->
     <string name="delete">Hapus</string>
-    <!-- // Update button label -->
     <string name="update">Edit</string>
-    <!-- // Attention dialog title -->
     <string name="attention">Perhatian</string>
-    <!-- // Confirmation question for deletion -->
+    <string name="retry">Retry</string>
+    <string name="gagal">Gagal</string>
+    <string name="loading">Loading</string>
     <string name="tanya">Apakah anda yakin menghapus ini ?</string>
-
 </resources>
