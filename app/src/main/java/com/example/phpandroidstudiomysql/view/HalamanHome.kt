@@ -53,169 +53,148 @@ object DestinasiHome : DestinasiNavigasi {
     override val titleRes = R.string.app_name
 }
 
-    @Composable
-    fun DataSiswaApp(navController: NavController = rememberNavController(), modifier: Modifier = Modifier) {
-        HostNavigasi(
-            navController = navController
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun HomeScreen(
+    //navigateToItemEntry: () -> Unit,
+    //navigateToItemUpdate:(Int) -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: HomeViewModel = viewModel(factory = PenyediaViewModel.Factory)
+) {
+    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+    Scaffold(
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            TopAppBar(
+                title = { Text(stringResource(id = R.string.app_name), color = Color.White)},
+                colors = TopAppBarDefaults.mediumTopAppBarColors(colorResource(id =
+                    R.color.purple_500)),
+                scrollBehavior = scrollBehavior
+            )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                //onClick = navigateToItemEntry,
+                onClick = {},
+                shape = MaterialTheme.shapes.medium,
+                modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_large))
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = stringResource(R.string.entry_siswa)
+                )
+            }
+        },
+    ) { innerPadding ->
+        HomeBody(
+            statusUiSiswa = viewModel.listSiswa,
+            //onSiswaClick = navigateToItemUpdate,
+            retryAction = viewModel::loadSiswa,
+            modifier = modifier
+                .padding(innerPadding)
+                .fillMaxSize()
         )
     }
-
-    @Composable
-    fun HostNavigasi(
-        navController: NavController,
-        modifier: Modifier = Modifier
-    ) {
-        NavHost(navController = navController, startDestination = DestinasiHome.route, modifier = modifier) {
-            composable (DestinasiHome.route) {
-                HomeScreen()
-        }
-    }
-    )
-
-    @OptIn(ExperimentalMaterial3Api::class)
-    @Composable
-    fun HomeScreen(
-        modifier: Modifier = Modifier,
-        viewModel: HomeViewModel = viewModel(factory = PenyediaViewModel.Factory)
-    ) {
-        val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-        Scaffold (
-            modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-            topBar = {
-                TopAppBar(
-                    title = { Text(stringResource(DestinasiHome.titleRes)) },
-                    colors = TopAppBarDefaults.mediumTopAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.primaryContainer
-                    ),
-                    scrollBehavior = scrollBehavior
-                )
-            },
-            floatingActionButton = {
-                FloatingActionButton1(
-                    onClick = { },
-                    shape = MaterialTheme.shapes.medium,
-                    modifier = Modifier.padding(
-                        dimensionResource(id = R.dimen.padding_large)
-                    )
-                )
-                {
-                    Icon(
-                        imageVector = Icons.Default.Phone,
-                        contentDescription = stringResource(R.string.entry_siswa)
-                    )
-                }
-            },
-        ) { innerPadding ->
-            HomeBody(
-                statusUiSiswa = viewModel.statusUiSiswa,
-                retryAction = viewModel::loadSiswa,
-                modifier = modifier
-                    .padding(innerPadding)
-                    .fillMaxSize()
+}
+@Composable
+fun HomeBody(
+    statusUiSiswa: StatusUiSiswa,
+    //onSiswaClick: (Int) -> Unit,
+    retryAction: () -> Unit,
+    modifier: Modifier = Modifier
+){
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = modifier
+    ){
+        when(statusUiSiswa){
+            is StatusUiSiswa.Loading -> LoadingScreen()
+            is StatusUiSiswa.Success -> DaftarSiswa(itemSiswa = statusUiSiswa.siswa) //,
+            //onSiswaClick = {onSiswaClick(it.id)} )
+            is StatusUiSiswa.Error -> ErrorScreen(
+                retryAction,
+                modifier = modifier.fillMaxSize()
             )
         }
     }
+}
+@Composable
+fun LoadingScreen(modifier: Modifier = Modifier) {
+    Image(
+        modifier = modifier.size(200.dp),
+        painter = painterResource(R.drawable.loading_img),
+        contentDescription = stringResource(R.string.loading)
+    )
+}
 
-    @Composable
-    fun HomeBody(
-        statusUiSiswa: StatusUiSiswa,
-        //onSiswaClick: (Int) -> Unit,
-        retryAction: () -> Unit,
-        modifier: Modifier = Modifier
-    ){
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = modifier
-        ){
-            when(statusUiSiswa){
-                is StatusUiSiswa.Loading -> LoadingScreen()
-                is StatusUiSiswa.Success -> DaftarSiswa(itemSiswa = statusUiSiswa.siswa) //,
-                //onSiswaClick = {onSiswaClick(it.id)} )
-                is StatusUiSiswa.Error -> ErrorScreen(
-                    retryAction,
-                    modifier = modifier.fillMaxSize()
-                )
-            }
-        }
-    }
-
-    @Composable
-    fun LoadingScreen(modifier: Modifier = Modifier) {
-        Image(
-            modifier = modifier.size(200.dp),
-            painter = painterResource(R.drawable.loading_img),
-            contentDescription = stringResource(R.string.loading)
-        )
-    }
-
-    @Composable
-    fun ErrorScreen(retryAction: () -> Unit, modifier: Modifier = Modifier) {
-        Column(
-            modifier = modifier,
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(stringResource(R.string.loading_failed))
-            Button(onClick = retryAction) {
-                Text(stringResource(R.string.retry))
-            }
-        }
-    }
-
-
-    @Composable
-    fun DaftarSiswa(
-        itemSiswa: List<DataSiswa>,
-        modifier: Modifier = Modifier
+@Composable
+fun ErrorScreen(retryAction: () -> Unit, modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        LazyColumn(modifier = modifier) {
-            items(items = itemSiswa, key = { it.id }) { person ->
-                ItemSiswa(
-                    siswa = person,
-                    modifier = Modifier
-                        .padding(dimensionResource(id = R.dimen.padding_small))
-                )
-            }
+        Text(text = stringResource(R.string.gagal), modifier = Modifier.padding(16.dp))
+        Button(onClick = retryAction) {
+            Text(stringResource(R.string.retry))
         }
     }
+}
+@Composable
+fun DaftarSiswa(
+    itemSiswa : List<DataSiswa>,
+    //onSiswaClick: (DataSiswa) -> Unit,
+    modifier: Modifier=Modifier
+){
+    LazyColumn(modifier = Modifier){
+        items(items = itemSiswa, key = {it.id}){
+                person ->
+            ItemSiswa(
+                siswa = person,
+                modifier = Modifier
+                    .padding(dimensionResource(id = R.dimen.padding_small))
+                //.clickable { onSiswaClick(person) }
+            )
+        }
+    }
+}
 
-    @Composable
-    fun ItemSiswa(
-        siswa: DataSiswa,
-        modifier: Modifier = Modifier,
-
+@Composable
+fun ItemSiswa(
+    siswa: DataSiswa,
+    modifier: Modifier = Modifier
+) {
+    Card(
+        modifier = modifier,
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+    ) {
+        Column(
+            modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_large)),
+            verticalArrangement = Arrangement.spacedBy(dimensionResource(
+                id = R.dimen.padding_small))
         ) {
-        Card(
-            modifier = modifier,
-            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
-
-        ) {
-            Column(
-                modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_large)),
-                verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_small))
+            Row(
+                modifier = Modifier.fillMaxWidth()
             ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(
-                        text = siswa.nama,
-                        style = MaterialTheme.typography.titleLarge,
-                    )
-                    Spacer(Modifier.weight(1f))
-                    Icon(
-                        imageVector = Icons.Default.Phone,
-                        contentDescription = null,
-                    )
-                    Text(
-                        text = siswa.telepon,
-                        style = MaterialTheme.typography.titleMedium
-                    )
-                }
                 Text(
-                    text = siswa.alamat,
+                    text = siswa.nama,
+                    style = MaterialTheme.typography.titleLarge,
+                )
+                Spacer(Modifier.weight(1f))
+                Icon(
+                    imageVector = Icons.Default.Phone,
+                    contentDescription = null,
+                )
+                Text(
+                    text = siswa.telepon,
                     style = MaterialTheme.typography.titleMedium
                 )
             }
+            Text(
+                text = siswa.alamat,
+                style = MaterialTheme.typography.titleMedium
+            )
         }
     }
+}
 
