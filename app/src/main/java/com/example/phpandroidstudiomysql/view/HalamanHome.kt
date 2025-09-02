@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -27,8 +28,27 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.phpandroidstudiomysql.R
 import com.example.phpandroidstudiomysql.modeldata.DataSiswa
+import com.example.phpandroidstudiomysql.viewmodel.StatusUiSiswa
 
+@Composable
+fun HomeBody(
+    statusUiSiswa: StatusUiSiswa,
+    retryAction: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        when (statusUiSiswa) {
+            is StatusUiSiswa.Loading -> LoadingScreen()
+            is StatusUiSiswa.Success -> DaftarSiswa(statusUiSiswa.siswa)
+            is StatusUiSiswa.Error -> ErrorScreen(retryAction, modifier.fillMaxSize())
+        }
 
+    }
+
+}
 
 @Composable
 fun LoadingScreen(modifier: Modifier = Modifier) {
