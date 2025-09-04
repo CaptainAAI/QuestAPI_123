@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import retrofit2.Response
 
-class EntryViewModel(private val repositoryDataSiswa: RepositoryDataSiswa: RepositoryDataSiswa): viewModel() {
+class EntryViewModel(private val repositoryDataSiswa: RepositoryDataSiswa: RepositoriDataSiswa): viewModel() {
     var uiStateSiswa by mutableStateOf(UIStateSiswa())
         private set
 
@@ -31,7 +31,7 @@ class EntryViewModel(private val repositoryDataSiswa: RepositoryDataSiswa: Repos
 
     suspend fun addSiswa(): Response<Void>{
         if (validasiInput()) {
-            val sip:Response<Void> = repositoryDataSiswa.postDataSiswa(uiStateSiswa.detailSiswa.toDataSiswa())
+            val sip:Response<Void> = repositoryDataSiswa.postDataSiswa(uiStateSiswa.detailSiswa.toSiswa())
             if(sip.isSuccessful){
                 println()("Sukses Tambah Data : ${sip.message()}")
             }else{
