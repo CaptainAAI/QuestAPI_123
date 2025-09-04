@@ -1,4 +1,11 @@
 package com.example.phpandroidstudiomysql.uicontroller.route
 
-object DestinasiEntry {
+import com.example.phpandroidstudiomysql.R
+
+object DestinasEntry: DestinasiNavigasi {
+    override val route = "item_entry"
+    override val titleRes = R.string.entry_siswa
+
+
+
 }
