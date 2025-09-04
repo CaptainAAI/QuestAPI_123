@@ -10,26 +10,25 @@ import com.example.phpandroidstudiomysql.view.DestinasiHome
 import com.example.phpandroidstudiomysql.view.HomeScreen
 
 @Composable
-fun DataSiswaApp(navController: NavHostController = rememberNavController(),
-                 modifier: Modifier){
-    HostNavigasi(navController = navController)
+fun DataSiswaApp(
+    navController: NavHostController = rememberNavController(),
+    modifier: Modifier = Modifier,
+) {
+    HostNavigasi(navController = navController, modifier = modifier)
 }
 
 @Composable
 fun HostNavigasi(
     navController: NavHostController,
-    modifier: Modifier = Modifier
-){
-    NavHost(navController = navController, startDestination = DestinasiHome.route,
-        modifier = Modifier ){
-        composable(DestinasiHome.route) {
-            HomeScreen()
-            /*navigateToItemEntry = { navController.navigate(DestinasiEntry.route) },
-            navigateToItemUpdate = {
-                navController.navigate("${DestinasiDetailSiswa.route}/${it}")}) */
-        }
-        /* composable(DestinasiEntry.route){
-             EntrySiswaScreen(navigateBack = { navController.navigate(DestinasiHome.route) })
-         } */
+    modifier: Modifier = Modifier,
+) {
+    NavHost(
+        navController = navController,
+        startDestination = DestinasiHome.route,
+        modifier = Modifier
+    ) { composable(DestinasiHome.route) {
+        HomeScreen()
+    }
+
     }
 }

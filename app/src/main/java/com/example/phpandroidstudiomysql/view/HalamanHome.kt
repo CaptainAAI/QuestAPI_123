@@ -1,7 +1,6 @@
 package com.example.phpandroidstudiomysql.view
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -37,12 +36,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.rememberNavController
 import com.example.phpandroidstudiomysql.R
 import com.example.phpandroidstudiomysql.modeldata.DataSiswa
-import com.example.phpandroidstudiomysql.uicontroller.DestinasiNavigasi
+import com.example.phpandroidstudiomysql.uicontroller.route.DestinasiNavigasi
 import com.example.phpandroidstudiomysql.viewmodel.HomeViewModel
 import com.example.phpandroidstudiomysql.viewmodel.PenyediaViewModel
 import com.example.phpandroidstudiomysql.viewmodel.StatusUiSiswa
