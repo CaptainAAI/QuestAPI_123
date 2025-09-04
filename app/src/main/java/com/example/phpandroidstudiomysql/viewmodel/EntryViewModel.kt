@@ -15,31 +15,39 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import retrofit2.Response
 
-class EntryViewModel(private val repositoryDataSiswa: RepositoryDataSiswa: RepositoriDataSiswa): viewModel() {
+class EntryViewModel (private val repositoriDataSiswa: RepositoriDataSiswa): ViewModel() {
     var uiStateSiswa by mutableStateOf(UIStateSiswa())
         private set
 
     private fun validasiInput(uiState: DetailSiswa = uiStateSiswa.detailSiswa): Boolean {
-        return with(uiState){
+        return with(uiState) {
             nama.isNotBlank() && alamat.isNotBlank() && telpon.isNotBlank()
         }
     }
-    fun updateUiStateSiswa(uiState: DetailSiswa){
+
+    fun updateUiState(detailSiswa: DetailSiswa) {
         uiStateSiswa =
             UIStateSiswa(detailSiswa = detailSiswa, isEntryValid = validasiInput(detailSiswa))
     }
 
-    suspend fun addSiswa(): Response<Void>{
+    suspend fun addSiswa() {
         if (validasiInput()) {
-            val sip:Response<Void> = repositoryDataSiswa.postDataSiswa(uiStateSiswa.detailSiswa.toSiswa())
-            if(sip.isSuccessful){
-                println()("Sukses Tambah Data : ${sip.message()}")
-            }else{
-                println("Gagal Tambah Data : ${sip.message()}")
+            val sip: Response<DataSiswa> =
+                repositoriDataSiswa.postDataSiswa(uiStateSiswa.detailSiswa.toSiswa())
+            if (sip.isSuccessful) {
+                print("sukses" + sip.message())
+            } else {
+                print("gagal" + sip.errorBody())
             }
         }
-
     }
+
+    suspend fun saveSiswa() {
+        if (validasiInput()) {
+            repositoriDataSiswa.postDataSiswa(uiStateSiswa.detailSiswa.toSiswa())
+        }
+    }
+
 
 
 }

@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.phpandroidstudiomysql.view.DestinasiHome
+import com.example.phpandroidstudiomysql.view.EntrySiswaScreen
 import com.example.phpandroidstudiomysql.view.HomeScreen
 
 @Composable
@@ -27,8 +28,10 @@ fun HostNavigasi(
         startDestination = DestinasiHome.route,
         modifier = Modifier
     ) { composable(DestinasiHome.route) {
-        HomeScreen()
+        HomeScreen(navigateToItemEntry = { navController.navigate(DestinasiEntry.route)})
     }
-
+        composable(DestinasiEntry.route) {
+            EntrySiswaScreen(navigateBack = { navController.popBackStack() })
+        }
     }
 }

@@ -26,6 +26,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.phpandroidstudiomysql.R
 import com.example.phpandroidstudiomysql.modeldata.DetailSiswa
 import com.example.phpandroidstudiomysql.modeldata.UIStateSiswa
+import com.example.phpandroidstudiomysql.uicontroller.route.DestinasiEntry
 import com.example.phpandroidstudiomysql.viewmodel.EntryViewModel
 import com.example.phpandroidstudiomysql.viewmodel.PenyediaViewModel
 import kotlinx.coroutines.launch

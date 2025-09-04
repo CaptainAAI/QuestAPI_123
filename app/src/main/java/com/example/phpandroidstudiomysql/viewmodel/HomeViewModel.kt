@@ -10,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.phpandroidstudiomysql.modeldata.DataSiswa
 import com.example.phpandroidstudiomysql.repositori.JaringanRepositoryDataSiswa
+import com.example.phpandroidstudiomysql.repositori.RepositoriDataSiswa
 import com.example.phpandroidstudiomysql.repositori.RepositoryDataSiswa
 import kotlinx.coroutines.launch
 import okio.IOException
@@ -20,7 +21,7 @@ sealed interface StatusUiSiswa {
     object Error : StatusUiSiswa
     object Loading : StatusUiSiswa
 }
-class HomeViewModel(private val repositoryDataSiswa: RepositoryDataSiswa): ViewModel() {
+class HomeViewModel(private val repositoryDataSiswa: RepositoriDataSiswa): ViewModel() {
     var listSiswa: StatusUiSiswa by mutableStateOf(StatusUiSiswa.Loading)
         private set
 
